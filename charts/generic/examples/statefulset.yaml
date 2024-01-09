@@ -1,0 +1,21 @@
+app:
+  kind: StatefulSet
+  replicas: 1
+  command:
+  - spark
+  - history-server
+  statefulset:
+    podManagementPolicy: Parallel
+    volumeClaimTemplates:
+      - metadata:
+          name: data
+        spec:
+          volumeMode: Filesystem
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: foobar
+
+volumeMounts:
+- name: data # the same as volumeClaimTemplates name
+  mountPath: /data/

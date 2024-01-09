@@ -1,0 +1,219 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: nginx # REQUIRED
+  tag: ""           # REQUIRED
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+########## App settings ##########
+app:
+  kind: Deployment
+  replicas: null
+  command: null
+  args: null
+  ports:
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+  annotations: {}
+  podAnnotations: {}
+    ## In order to get prometheus to scrape pods
+    # prometheus.io/scrape: "true"
+    # prometheus.io/path: /metrics
+    # prometheus.io/port: "8080"
+    ## In order to fluentbit parse logs
+    # fluentbit.io/parser: apache
+  healthcheck:
+    liveness: {}
+    #   periodSeconds: 3
+    #   timeoutSeconds: 10
+    #   httpGet:
+    #     path: "/"
+    #     port: http
+    readiness: {}
+    startup: {}
+  schedulerName: null
+  runtimeClassName: null
+  priorityClassName: null
+
+  ## Deployment specific configs, e.g:
+  deployment: {}
+    # strategy:
+    #   type: RollingUpdate
+    #   rollingUpdate:
+    #     maxSurge: 50%
+
+  ## StatefulSet specific configs, e.g:
+  statefulset: {}
+    # podManagementPolicy: Parallel
+
+  ## DaemonSet specific configs, e.g:
+  daemonset:
+    # updateStrategy:
+    #   type: OnDelete
+
+  ## initContainers configs
+  initContainers: []
+
+  ## sidecarContainers configs
+  sidecarContainers: []
+
+resources: {}
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+env: []
+envFrom: []
+
+volumes: []
+# - name: configs
+#   configMap:
+#     name: configs
+#     optional: true
+
+volumeMounts: []
+# - name: configs
+#   mountPath: /etc/spark/configs
+
+volumeDevices: []
+
+configMaps: []
+# - name: configs
+#   data:
+#     foo: bar
+#     abc: xyz
+#   binaryData:
+#     data.bson: binarydata
+
+secrets: []
+# - name: credential
+#   type: Opaque
+#   stringData:
+#     username: admin
+#   data:
+#     password: Zm9vYmFyCg==  # base64 encoded string
+
+podDisruptionBudget:
+  enabled: false
+  # minAvailable: 1
+  # maxUnavailable: 1
+
+autoscaling:
+  enabled: false
+  min: 1
+  max: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+########## Placement ##########
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+########## RBAC, Serivce Account & Security Configs ##########
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+# rbac:
+#   # If true, create & use RBAC resources
+#   create: true
+#   # If true, create and use PodSecurityPolicy
+#   pspEnable: true
+#   # The name of the ServiceAccount to use.
+#   # If not set and create is true, a name is generated using the fullname template
+#   name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# securityContext at container level
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+########## Networking ##########
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+    protocol: TCP
+    # appProtocol
+  annotations: {}
+    ## In order to get prometheus to scrape service
+    # prometheus.io/scrape: "true"
+    # prometheus.io/path: /metrics
+    # prometheus.io/port: "8080"
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/tls-acme: "true"
+  ingressClassName:
+  hosts:
+  - host: example.com
+    paths:
+    - path: /
+      pathType: Prefix
+      portName: http
+  tls: []
+  # - secretName: example.com-tls
+  #   hosts:
+  #   - example.com
+
+httpProxy:
+  enabled: false
+  annotations: {}
+  host: example.com
+  tls: {}
+  corsPolicy: {}
+  rateLimitPolicy: {}
+  routes:
+  - prefix: /
+    port: 8080
+
+########## Observation ##########
+serviceMonitor:
+  enabled: false
+  additionalLabels: {}
+  port: http
+  interval: 30s
+  honorLabels: false
+  relabellings: {}
+
+########## Certificate ##########
+certificate:
+  enabled: false
+  annotations: {}
+  issuerRef: {}
+  secretName:
+  san:
+    dnsNames: []
+    ipAddresses: []
+    uris: []
+    emailAddresses: []
