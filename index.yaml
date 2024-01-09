@@ -13,4 +13,16 @@ entries:
     urls:
     - https://github.com/honganh-vn/helm-charts/releases/download/generic-0.7.2/generic-0.7.2.tgz
     version: 0.7.2
-generated: "2024-01-09T06:50:27.88690676Z"
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-01-09T06:54:43.444155923Z"
+    description: A generic helm chart
+    digest: 348bbce744d9e4fa087f775ae2713c0286d153b5c54748ca731250e5c8d530d6
+    keywords:
+    - generic
+    name: generic
+    type: application
+    urls:
+    - https://github.com/honganh-vn/helm-charts/releases/download/generic-0.7.1/generic-0.7.1.tgz
+    version: 0.7.1
+generated: "2024-01-09T06:54:43.444163958Z"
