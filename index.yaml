@@ -25,4 +25,19 @@ entries:
     urls:
     - https://github.com/honganh-vn/helm-charts/releases/download/generic-0.7.1/generic-0.7.1.tgz
     version: 0.7.1
-generated: "2024-01-09T06:54:43.444163958Z"
+  tempo:
+  - apiVersion: v2
+    appVersion: 2.1.1
+    created: "2024-05-21T04:15:55.234989318Z"
+    description: Helm chart for Grafana Tempo
+    digest: e73a4c97d7a3112fdc07044ce527f304c775507a603a50c50a7d992e8e75e89d
+    icon: https://grafana.com/static/assets/img/logos/grafana-tempo.svg
+    maintainers:
+    - email: hello@dungdm93.me
+      name: Đặng Minh Dũng
+    name: tempo
+    type: application
+    urls:
+    - https://github.com/honganh-vn/helm-charts/releases/download/tempo-0.2.0/tempo-0.2.0.tgz
+    version: 0.2.0
+generated: "2024-05-21T04:15:55.235001962Z"
